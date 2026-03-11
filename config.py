@@ -16,16 +16,16 @@ YTUB_COOKIES = """
 """
 
 # ─── BOT / DATABASE CONFIG ──────────────────────────────────────────────────────
-API_ID       = os.getenv("API_ID", " 33991640")
-API_HASH     = os.getenv("API_HASH", "85d4788bb11ac47f74d8e0754c410d91")
-BOT_TOKEN    = os.getenv("BOT_TOKEN", "8642896434:AAFUmn3w3yzz1JEQoWKnSYhUd5HMVAX1eCE")
-MONGO_DB     = os.getenv("MONGO_DB", "mongodb+srv://dveer77143_db_user:YourPassword@cluster0.sjql5pn.mongodb.net/bot_db?retryWrites=true&w=majority")
-DB_NAME      = os.getenv("DB_NAME", "save-restricted-content-bot")
+API_ID       = os.getenv("API_ID" )
+API_HASH     = os.getenv("API_HASH")
+BOT_TOKEN    = os.getenv("BOT_TOKEN")
+MONGO_DB     = os.getenv("MONGO_DB")
+DB_NAME      = os.getenv("DB_NAME")
 
 # ─── OWNER / CONTROL SETTINGS ───────────────────────────────────────────────────
-OWNER_ID     = list(map(int, os.getenv("OWNER_ID", "8208350805").split()))  # space-separated list
+OWNER_ID     = list(map(int, os.getenv("OWNER_ID").split()))  # space-separated list
 STRING       = os.getenv("STRING", None)  # optional session string
-LOG_GROUP    = int(os.getenv("LOG_GROUP", "-1001234456"))
+LOG_GROUP    = int(os.getenv("LOG_GROUP"))
 FORCE_SUB    = int(os.getenv("FORCE_SUB", "0"))
 
 # ─── SECURITY KEYS ──────────────────────────────────────────────────────────────
