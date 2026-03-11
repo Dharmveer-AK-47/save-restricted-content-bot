@@ -1,6 +1,4 @@
-# Copyright (c) 2025 devgagan : https://github.com/devgaganin.  
-# Licensed under the GNU General Public License v3.0.  
-# See LICENSE file in the repository root for full license text.
+
 
 from pyrogram import filters as f
 from shared_client import app
@@ -8,6 +6,7 @@ from pyrogram.types import InlineKeyboardButton as B, InlineKeyboardMarkup as M,
 from datetime import timedelta as T
 from utils.func import add_premium_user as apu
 from config import P0
+from config import OWNER_ID
 
 @app.on_message(f.command("pay") & f.private)
 async def p(c, m):

@@ -1,6 +1,3 @@
-# Copyright (c) 2025 devgagan : https://github.com/devgaganin.  
-# Licensed under the GNU General Public License v3.0.  
-# See LICENSE file in the repository root for full license text.
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -15,7 +12,7 @@ from plugins.batch import UB, UC
 from utils.custom_filters import login_in_progress, set_user_step, get_user_step
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-model = "v3saver Team SPY"
+model = "v3saver Team RSK"
 
 STEP_PHONE = 1
 STEP_CODE = 2

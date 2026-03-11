@@ -1,19 +1,66 @@
-# Copyright (c) 2025 devgagan : https://github.com/devgaganin.  
-# Licensed under the GNU General Public License v3.0.  
-# See LICENSE file in the repository root for full license text.
 
 from shared_client import app
 from pyrogram import filters
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import BotCommand, InlineKeyboardButton, InlineKeyboardMarkup
-from config import LOG_GROUP, OWNER_ID, FORCE_SUB
+from config import LOG_GROUP, OWNER_ID, FORCE_SUB, ADMIN_CONTACT, JOIN_LINK
+
+# Welcome message - Exact format as requested
+WELCOME_TEXT = """Hi 👋 Welcome
+
+I can save posts from channels where forwarding is off.
+I can download videos/audio from social platforms.
+Send a public link directly.
+For private channels use /login.
+Use /help for more info."""
+
+# Sample banner image placeholder - replace with your actual image URL
+BANNER_IMAGE = "https://graph.org/file/d44f024a08ded19452152.jpg"
+
+@app.on_message(filters.command("start") & filters.private)
+async def start(client, message):
+    join = await subscribe(client, message)
+    if join == 1:
+        return
+    
+    # Inline buttons as requested
+    buttons = InlineKeyboardMarkup([
+        [InlineKeyboardButton("📢 Join Channel", url=JOIN_LINK)],
+        [InlineKeyboardButton("⭐ Get Premium", callback_data="get_premium")]
+    ])
+    
+    # Send welcome banner image with message
+    await message.reply_photo(
+        photo=BANNER_IMAGE,
+        caption=WELCOME_TEXT,
+        reply_markup=buttons
+    )
+
+@app.on_callback_query(filters.regex("get_premium"))
+async def get_premium_callback(client, callback_query):
+    plan_text = (
+        "💰 **Premium Plans**\n\n"
+        "Get premium to enjoy:\n"
+        "• Unlimited downloads\n"
+        "• Faster processing\n"
+        "• Batch processing\n"
+        "• Priority support\n\n"
+        "Contact @dharuva_007 for pricing!"
+    )
+    await callback_query.message.edit_text(plan_text)
+    await callback_query.answer()
+
+@app.on_callback_query(filters.regex("help_btn"))
+async def help_btn_callback(client, callback_query):
+    await send_or_edit_help_page(client, callback_query.message, 0)
+    await callback_query.answer()
 
 async def subscribe(app, message):
     if FORCE_SUB:
         try:
           user = await app.get_chat_member(FORCE_SUB, message.from_user.id)
           if str(user.status) == "ChatMemberStatus.BANNED":
-              await message.reply_text("You are Banned. Contact -- Team SPY")
+              await message.reply_text("You are Banned. Contact -- Team RSK")
               return 1
         except UserNotParticipant:
             link = await app.export_chat_invite_link(FORCE_SUB)
@@ -103,7 +150,7 @@ help_pages = [
         "> 4. REPLACEWORDS : Can be used for words in deleted set via REMOVE WORDS\n"
         "> 5. RESET : To set the things back to default\n\n"
         "> You can set CUSTOM THUMBNAIL, PDF WATERMARK, VIDEO WATERMARK, SESSION-based login, etc. from settings\n\n"
-        "**__Powered by Team SPY__**"
+        "**__Powered by Team RSK__**"
     )
 ]
  
@@ -171,7 +218,7 @@ async def terms(client, message):
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📋 See Plans", callback_data="see_plan")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/RSK_free_content")],
         ]
     )
     await message.reply_text(terms_text, reply_markup=buttons)
@@ -190,7 +237,7 @@ async def plan(client, message):
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📜 See Terms", callback_data="see_terms")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/RSK_free_content")],
         ]
     )
     await message.reply_text(plan_text, reply_markup=buttons)
@@ -209,7 +256,7 @@ async def see_plan(client, callback_query):
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📜 See Terms", callback_data="see_terms")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/RSK_free_content")],
         ]
     )
     await callback_query.message.edit_text(plan_text, reply_markup=buttons)
@@ -227,7 +274,7 @@ async def see_terms(client, callback_query):
     buttons = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("📋 See Plans", callback_data="see_plan")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/kingofpatal")],
+            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/RSK_free_content")],
         ]
     )
     await callback_query.message.edit_text(terms_text, reply_markup=buttons)

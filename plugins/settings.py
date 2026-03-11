@@ -1,6 +1,3 @@
-# Copyright (c) 2025 devgagan : https://github.com/devgaganin.  
-# Licensed under the GNU General Public License v3.0.  
-# See LICENSE file in the repository root for full license text.
 
 from telethon import events, Button
 import re
@@ -49,7 +46,7 @@ async def send_settings_message(chat_id, user_id):
             Button.inline('❌ Remove Thumbnail', b'remthumb')
         ],
         [
-            Button.url('🆘 Report Errors', 'https://t.me/team_spy_pro')
+            Button.url('🆘 Report Errors', 'https://t.me/RSK_free_content')
         ]
     ]
     await gf.send_message(chat_id, MESS, buttons=buttons)
